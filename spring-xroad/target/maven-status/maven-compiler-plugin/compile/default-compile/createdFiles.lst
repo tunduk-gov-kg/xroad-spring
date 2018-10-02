@@ -1,0 +1,5 @@
+kg/gov/tunduk/xroad/XRoadMessagesProvider.class
+kg/gov/tunduk/xroad/XRoadSoapProvider.class
+kg/gov/tunduk/xroad/XRoadEndpointInterceptor.class
+kg/gov/tunduk/xroad/XRoadXsdSchemaTypesProvider.class
+kg/gov/tunduk/xroad/XRoadWsdlDefinition.class
