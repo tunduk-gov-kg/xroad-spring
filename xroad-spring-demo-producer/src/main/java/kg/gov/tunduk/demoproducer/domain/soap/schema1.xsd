@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://tunduk.gov.kg" xmlns:tns="http://tunduk.gov.kg" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="helloRequest" type="tns:HelloRequest"/>
+
+  <xs:complexType name="HelloRequest">
+    <xs:sequence>
+      <xs:element name="name" type="xs:string" form="qualified"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+
