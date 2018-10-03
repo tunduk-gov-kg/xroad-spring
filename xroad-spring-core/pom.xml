@@ -5,7 +5,7 @@
 
     <groupId>kg.gov.tunduk</groupId>
     <artifactId>xroad-spring-core</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
