@@ -5,11 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.context.MessageContext;
+import org.springframework.ws.server.endpoint.MethodEndpoint;
 import org.springframework.ws.soap.SoapHeader;
 import org.springframework.ws.soap.SoapHeaderElement;
 import org.springframework.ws.soap.SoapMessage;
 import org.springframework.ws.soap.server.SoapEndpointInterceptor;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import java.util.Iterator;
@@ -19,7 +21,16 @@ public class XRoadEndpointInterceptor implements SoapEndpointInterceptor {
     private final Logger logger = LoggerFactory.getLogger(XRoadEndpointInterceptor.class);
 
     @Override
-    public boolean handleRequest(MessageContext messageContext, Object endpoint) {
+    public boolean handleRequest(MessageContext messageContext, Object endpoint) throws JAXBException {
+        if (endpoint instanceof MethodEndpoint) {
+            val methodEndpoint = (MethodEndpoint) endpoint;
+            Object endpointBean = methodEndpoint.getBean();
+            if (endpointBean instanceof XRoadEndpoint) {
+                XRoadEndpoint xRoadEndpoint = (XRoadEndpoint) endpointBean;
+                SoapHeader soapHeader = fetchSoapHeader(messageContext.getRequest());
+                xRoadEndpoint.initialize(soapHeader);
+            }
+        }
         return true;
     }
 
@@ -57,7 +68,6 @@ public class XRoadEndpointInterceptor implements SoapEndpointInterceptor {
     public void afterCompletion(MessageContext messageContext, Object endpoint, Exception ex) {
 
     }
-
 
     @Override
     public boolean understands(SoapHeaderElement header) {
