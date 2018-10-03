@@ -16,7 +16,7 @@
 ```xml
 <dependency>
 	<groupId>kg.gov.tunduk</groupId>
-	<artifactId>xroad-spring</artifactId>
-	<version>0.0.1</version>
+	<artifactId>xroad-spring-core</artifactId>
+	<version>0.0.2</version>
 </dependency>
 ```
