@@ -21,4 +21,35 @@ public class XRoadSubSystemId {
 
     @XmlElement(name = "subsystemCode", namespace = "http://x-road.eu/xsd/identifiers")
     private String subSystemCode;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        XRoadSubSystemId that = (XRoadSubSystemId) o;
+
+        if (!instance.equals(that.instance)) return false;
+        if (!memberClass.equals(that.memberClass)) return false;
+        if (!memberCode.equals(that.memberCode)) return false;
+        return subSystemCode.equals(that.subSystemCode);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = instance.hashCode();
+        result = 31 * result + memberClass.hashCode();
+        result = 31 * result + memberCode.hashCode();
+        result = 31 * result + subSystemCode.hashCode();
+        return result;
+    }
+
+    public static XRoadSubSystemId from(XRoadServiceId serviceId) {
+        XRoadSubSystemId subSystemId = new XRoadSubSystemId();
+        subSystemId.setInstance(serviceId.getInstance());
+        subSystemId.setMemberClass(serviceId.getMemberClass());
+        subSystemId.setMemberCode(serviceId.getMemberCode());
+        subSystemId.setSubSystemCode(serviceId.getSubSystemCode());
+        return subSystemId;
+    }
 }
