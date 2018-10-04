@@ -1,5 +1,0 @@
-kg/gov/tunduk/demoproducer/configuration/ProducerConfig.class
-kg/gov/tunduk/demoproducer/DemoProducerApplication.class
-kg/gov/tunduk/demoproducer/endpoint/HelloEndpoint.class
-kg/gov/tunduk/demoproducer/domain/soap/HelloResponse.class
-kg/gov/tunduk/demoproducer/domain/soap/HelloRequest.class
