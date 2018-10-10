@@ -37,8 +37,8 @@ public class XRoadHeader implements WebServiceMessageCallback {
         this.producer = producer;
 
         this.protocolVersion = new JAXBElement<>(_ProtocolVersion_QNAME, String.class, null, "4.0");
-        this.userId = new JAXBElement<>(_UserId_QNAME, String.class, null, messageId);
-        this.messageId = new JAXBElement<>(_Id_QNAME, String.class, null, userId);
+        this.userId = new JAXBElement<>(_UserId_QNAME, String.class, null, userId);
+        this.messageId = new JAXBElement<>(_Id_QNAME, String.class, null, messageId);
     }
 
     @Override
