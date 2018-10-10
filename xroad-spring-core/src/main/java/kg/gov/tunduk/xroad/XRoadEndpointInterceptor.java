@@ -1,8 +1,6 @@
 package kg.gov.tunduk.xroad;
 
 import lombok.val;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.server.endpoint.MethodEndpoint;
@@ -17,8 +15,6 @@ import javax.xml.transform.TransformerFactory;
 import java.util.Iterator;
 
 public class XRoadEndpointInterceptor implements SoapEndpointInterceptor {
-
-    private final Logger logger = LoggerFactory.getLogger(XRoadEndpointInterceptor.class);
 
     @Override
     public boolean handleRequest(MessageContext messageContext, Object endpoint) throws JAXBException {
