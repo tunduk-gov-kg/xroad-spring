@@ -11,6 +11,7 @@
     <modules>
         <module>xroad-spring-core</module>
         <module>xroad-spring-demo-producer</module>
+        <module>xroad-spring-demo-consumer</module>
     </modules>
 
 </project>
