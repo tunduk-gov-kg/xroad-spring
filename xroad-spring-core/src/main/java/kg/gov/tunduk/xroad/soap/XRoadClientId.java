@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "client", namespace = "http://x-road.eu/xsd/xroad.xsd")
 public class XRoadClientId {
 
-    @XmlElement(name = "objectType", required = true, namespace = "http://x-road.eu/xsd/identifiers")
+    @XmlAttribute(name = "objectType", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private ObjectType objectType;
 
     @XmlElement(name = "xRoadInstance", required = true, namespace = "http://x-road.eu/xsd/identifiers")
