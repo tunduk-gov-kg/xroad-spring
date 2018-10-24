@@ -8,15 +8,18 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "XRoadClientIdentifierType", namespace = "http://x-road.eu/xsd/identifiers")
 @XmlRootElement(name = "client", namespace = "http://x-road.eu/xsd/xroad.xsd")
-public class XRoadSubSystemId {
+public class XRoadClientId {
 
-    @XmlElement(name = "xRoadInstance", namespace = "http://x-road.eu/xsd/identifiers")
+    @XmlElement(name = "objectType", required = true, namespace = "http://x-road.eu/xsd/identifiers")
+    private ObjectType objectType;
+
+    @XmlElement(name = "xRoadInstance", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private String instance;
 
-    @XmlElement(name = "memberClass", namespace = "http://x-road.eu/xsd/identifiers")
+    @XmlElement(name = "memberClass", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private String memberClass;
 
-    @XmlElement(name = "memberCode", namespace = "http://x-road.eu/xsd/identifiers")
+    @XmlElement(name = "memberCode", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private String memberCode;
 
     @XmlElement(name = "subsystemCode", namespace = "http://x-road.eu/xsd/identifiers")
@@ -27,25 +30,27 @@ public class XRoadSubSystemId {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        XRoadSubSystemId that = (XRoadSubSystemId) o;
+        XRoadClientId that = (XRoadClientId) o;
 
+        if (objectType != that.objectType) return false;
         if (!instance.equals(that.instance)) return false;
         if (!memberClass.equals(that.memberClass)) return false;
         if (!memberCode.equals(that.memberCode)) return false;
-        return subSystemCode.equals(that.subSystemCode);
+        return subSystemCode != null ? subSystemCode.equals(that.subSystemCode) : that.subSystemCode == null;
     }
 
     @Override
     public int hashCode() {
-        int result = instance.hashCode();
+        int result = objectType.hashCode();
+        result = 31 * result + instance.hashCode();
         result = 31 * result + memberClass.hashCode();
         result = 31 * result + memberCode.hashCode();
-        result = 31 * result + subSystemCode.hashCode();
+        result = 31 * result + (subSystemCode != null ? subSystemCode.hashCode() : 0);
         return result;
     }
 
-    public static XRoadSubSystemId from(XRoadServiceId serviceId) {
-        XRoadSubSystemId subSystemId = new XRoadSubSystemId();
+    public static XRoadClientId from(XRoadServiceId serviceId) {
+        XRoadClientId subSystemId = new XRoadClientId();
         subSystemId.setInstance(serviceId.getInstance());
         subSystemId.setMemberClass(serviceId.getMemberClass());
         subSystemId.setMemberCode(serviceId.getMemberCode());

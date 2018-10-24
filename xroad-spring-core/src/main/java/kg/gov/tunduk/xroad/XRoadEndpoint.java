@@ -1,7 +1,8 @@
 package kg.gov.tunduk.xroad;
 
+import kg.gov.tunduk.xroad.soap.ObjectType;
+import kg.gov.tunduk.xroad.soap.XRoadClientId;
 import kg.gov.tunduk.xroad.soap.XRoadServiceId;
-import kg.gov.tunduk.xroad.soap.XRoadSubSystemId;
 import lombok.Getter;
 import org.springframework.util.Assert;
 import org.springframework.ws.soap.SoapHeader;
@@ -19,14 +20,14 @@ public class XRoadEndpoint {
     private String messageId;
     private String protocolVersion;
 
-    private XRoadSubSystemId consumer;
+    private XRoadClientId consumer;
     private XRoadServiceId producer;
 
     private Unmarshaller unmarshaller;
 
     public XRoadEndpoint() {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(XRoadSubSystemId.class, XRoadServiceId.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(XRoadClientId.class, XRoadServiceId.class, ObjectType.class);
             this.unmarshaller = jaxbContext.createUnmarshaller();
         } catch (Exception exception) {
             exception.printStackTrace();
@@ -51,7 +52,7 @@ public class XRoadEndpoint {
 
         Iterator<SoapHeaderElement> client = soapHeader.examineHeaderElements(new QName("http://x-road.eu/xsd/xroad.xsd", "client"));
         Assert.isTrue(client.hasNext(), "Expected client identifier");
-        this.consumer = ((XRoadSubSystemId) unmarshaller.unmarshal(client.next().getSource()));
+        this.consumer = ((XRoadClientId) unmarshaller.unmarshal(client.next().getSource()));
 
         Iterator<SoapHeaderElement> producer = soapHeader.examineHeaderElements(new QName("http://x-road.eu/xsd/xroad.xsd", "service"));
         Assert.isTrue(producer.hasNext(), "Expected service identifier");

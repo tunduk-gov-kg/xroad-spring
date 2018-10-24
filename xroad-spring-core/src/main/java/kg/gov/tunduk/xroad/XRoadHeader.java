@@ -1,7 +1,9 @@
 package kg.gov.tunduk.xroad;
 
+import kg.gov.tunduk.xroad.soap.ObjectType;
+import kg.gov.tunduk.xroad.soap.XRoadClientId;
 import kg.gov.tunduk.xroad.soap.XRoadServiceId;
-import kg.gov.tunduk.xroad.soap.XRoadSubSystemId;
+import lombok.val;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.soap.SoapHeader;
@@ -20,7 +22,7 @@ public class XRoadHeader implements WebServiceMessageCallback {
     private final static QName _ProtocolVersion_QNAME = new QName("http://x-road.eu/xsd/xroad.xsd", "protocolVersion");
 
 
-    private final XRoadSubSystemId consumer;
+    private final XRoadClientId consumer;
     private final XRoadServiceId producer;
 
     private final JAXBElement<String> protocolVersion;
@@ -28,7 +30,7 @@ public class XRoadHeader implements WebServiceMessageCallback {
     private final JAXBElement<String> userId;
 
     public XRoadHeader(
-            XRoadSubSystemId consumer,
+            XRoadClientId consumer,
             XRoadServiceId producer,
             String messageId,
             String userId
@@ -45,13 +47,14 @@ public class XRoadHeader implements WebServiceMessageCallback {
     public void doWithMessage(WebServiceMessage message) {
         SoapHeader soapHeader = ((SoapMessage) message).getSoapHeader();
         try {
-            JAXBContext context = JAXBContext.newInstance(XRoadSubSystemId.class, XRoadServiceId.class);
+            JAXBContext context = JAXBContext.newInstance(XRoadClientId.class, XRoadServiceId.class, ObjectType.class);
             Marshaller marshaller = context.createMarshaller();
-            marshaller.marshal(this.protocolVersion, soapHeader.getResult());
-            marshaller.marshal(this.messageId, soapHeader.getResult());
-            marshaller.marshal(this.producer, soapHeader.getResult());
-            marshaller.marshal(this.consumer, soapHeader.getResult());
-            marshaller.marshal(this.userId, soapHeader.getResult());
+            val soapHeaderResult = soapHeader.getResult();
+            marshaller.marshal(this.protocolVersion, soapHeaderResult);
+            marshaller.marshal(this.messageId, soapHeaderResult);
+            marshaller.marshal(this.producer, soapHeaderResult);
+            marshaller.marshal(this.consumer, soapHeaderResult);
+            marshaller.marshal(this.userId, soapHeaderResult);
         } catch (JAXBException e) {
             e.printStackTrace();
         }

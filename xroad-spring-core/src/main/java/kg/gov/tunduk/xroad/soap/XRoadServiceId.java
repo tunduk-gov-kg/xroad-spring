@@ -10,19 +10,22 @@ import javax.xml.bind.annotation.*;
 @XmlRootElement(name = "service", namespace = "http://x-road.eu/xsd/xroad.xsd")
 public class XRoadServiceId {
 
-    @XmlElement(name = "xRoadInstance", namespace = "http://x-road.eu/xsd/identifiers")
+    @XmlAttribute(name = "objectType", required = true, namespace = "http://x-road.eu/xsd/identifiers")
+    private ObjectType objectType = ObjectType.SERVICE;
+
+    @XmlElement(name = "xRoadInstance", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private String instance;
 
-    @XmlElement(name = "memberClass", namespace = "http://x-road.eu/xsd/identifiers")
+    @XmlElement(name = "memberClass", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private String memberClass;
 
-    @XmlElement(name = "memberCode", namespace = "http://x-road.eu/xsd/identifiers")
+    @XmlElement(name = "memberCode", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private String memberCode;
 
     @XmlElement(name = "subsystemCode", namespace = "http://x-road.eu/xsd/identifiers")
     private String subSystemCode;
 
-    @XmlElement(name = "serviceCode", namespace = "http://x-road.eu/xsd/identifiers")
+    @XmlElement(name = "serviceCode", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private String serviceCode;
 
     @XmlElement(name = "serviceVersion", namespace = "http://x-road.eu/xsd/identifiers")
