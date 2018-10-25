@@ -1,6 +1,6 @@
 package kg.gov.tunduk.xroad;
 
-import kg.gov.tunduk.xroad.soap.ObjectType;
+import kg.gov.tunduk.xroad.soap.XRoadObjectType;
 import kg.gov.tunduk.xroad.soap.XRoadClientId;
 import kg.gov.tunduk.xroad.soap.XRoadServiceId;
 import lombok.val;
@@ -47,7 +47,7 @@ public class XRoadHeader implements WebServiceMessageCallback {
     public void doWithMessage(WebServiceMessage message) {
         SoapHeader soapHeader = ((SoapMessage) message).getSoapHeader();
         try {
-            JAXBContext context = JAXBContext.newInstance(XRoadClientId.class, XRoadServiceId.class, ObjectType.class);
+            JAXBContext context = JAXBContext.newInstance(XRoadClientId.class, XRoadServiceId.class, XRoadObjectType.class);
             Marshaller marshaller = context.createMarshaller();
             val soapHeaderResult = soapHeader.getResult();
             marshaller.marshal(this.protocolVersion, soapHeaderResult);

@@ -1,6 +1,6 @@
 package kg.gov.tunduk.xroad;
 
-import kg.gov.tunduk.xroad.soap.ObjectType;
+import kg.gov.tunduk.xroad.soap.XRoadObjectType;
 import kg.gov.tunduk.xroad.soap.XRoadClientId;
 import kg.gov.tunduk.xroad.soap.XRoadServiceId;
 import lombok.Getter;
@@ -27,7 +27,7 @@ public class XRoadEndpoint {
 
     public XRoadEndpoint() {
         try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(XRoadClientId.class, XRoadServiceId.class, ObjectType.class);
+            JAXBContext jaxbContext = JAXBContext.newInstance(XRoadClientId.class, XRoadServiceId.class, XRoadObjectType.class);
             this.unmarshaller = jaxbContext.createUnmarshaller();
         } catch (Exception exception) {
             exception.printStackTrace();

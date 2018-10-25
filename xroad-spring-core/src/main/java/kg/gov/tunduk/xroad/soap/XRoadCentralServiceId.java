@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.*;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "centralService", namespace = "http://x-road.eu/xsd/xroad.xsd")
 @XmlType(name = "XRoadCentralServiceIdentifierType", namespace = "http://x-road.eu/xsd/identifiers")
-public class CentralServiceId {
+public class XRoadCentralServiceId {
 
     @XmlElement(name = "xRoadInstance", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private String instance;

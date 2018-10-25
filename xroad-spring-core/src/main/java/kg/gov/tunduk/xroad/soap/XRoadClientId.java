@@ -11,7 +11,9 @@ import javax.xml.bind.annotation.*;
 public class XRoadClientId {
 
     @XmlAttribute(name = "objectType", required = true, namespace = "http://x-road.eu/xsd/identifiers")
-    private ObjectType objectType;
+    public XRoadObjectType getObjectType() {
+        return (subSystemCode == null) ? XRoadObjectType.MEMBER : XRoadObjectType.SUBSYSTEM;
+    }
 
     @XmlElement(name = "xRoadInstance", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private String instance;
@@ -32,7 +34,7 @@ public class XRoadClientId {
 
         XRoadClientId that = (XRoadClientId) o;
 
-        if (objectType != that.objectType) return false;
+        if (getObjectType() != that.getObjectType()) return false;
         if (!instance.equals(that.instance)) return false;
         if (!memberClass.equals(that.memberClass)) return false;
         if (!memberCode.equals(that.memberCode)) return false;
@@ -41,7 +43,7 @@ public class XRoadClientId {
 
     @Override
     public int hashCode() {
-        int result = objectType.hashCode();
+        int result = getObjectType().hashCode();
         result = 31 * result + instance.hashCode();
         result = 31 * result + memberClass.hashCode();
         result = 31 * result + memberCode.hashCode();

@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlEnum
 @XmlType(name = "XRoadObjectType", namespace = "http://x-road.eu/xsd/identifiers")
-public enum ObjectType {
+public enum XRoadObjectType {
     MEMBER,
     SUBSYSTEM,
     SERVER,

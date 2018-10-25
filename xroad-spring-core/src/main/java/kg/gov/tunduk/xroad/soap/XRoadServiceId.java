@@ -11,7 +11,7 @@ import javax.xml.bind.annotation.*;
 public class XRoadServiceId {
 
     @XmlAttribute(name = "objectType", required = true, namespace = "http://x-road.eu/xsd/identifiers")
-    private ObjectType objectType = ObjectType.SERVICE;
+    private XRoadObjectType objectType = XRoadObjectType.SERVICE;
 
     @XmlElement(name = "xRoadInstance", required = true, namespace = "http://x-road.eu/xsd/identifiers")
     private String instance;
