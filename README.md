@@ -1,6 +1,6 @@
 # xroad-spring
 
-# Добавление репозитория
+# Maven repository
 
 ```xml
 <repositories>
@@ -11,12 +11,12 @@
 </repositories>
 ```
 
-# Добавление зависимости
+# Maven dependency
 
 ```xml
 <dependency>
 	<groupId>kg.gov.tunduk</groupId>
 	<artifactId>xroad-spring-core</artifactId>
-	<version>0.0.4</version>
+	<version>0.0.8</version>
 </dependency>
 ```
