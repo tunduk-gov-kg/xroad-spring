@@ -62,7 +62,6 @@ public class XRoadEndpointInterceptor implements SoapEndpointInterceptor {
 
     @Override
     public void afterCompletion(MessageContext messageContext, Object endpoint, Exception ex) {
-
     }
 
     @Override

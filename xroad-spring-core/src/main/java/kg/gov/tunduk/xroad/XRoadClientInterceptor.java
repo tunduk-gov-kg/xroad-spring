@@ -6,6 +6,7 @@ import org.springframework.ws.client.WebServiceClientException;
 import org.springframework.ws.client.support.interceptor.ClientInterceptor;
 import org.springframework.ws.context.MessageContext;
 import org.springframework.ws.mime.Attachment;
+import org.springframework.ws.soap.SoapFaultException;
 import org.springframework.ws.soap.saaj.SaajSoapMessage;
 
 import javax.xml.soap.SOAPException;
@@ -34,12 +35,12 @@ public class XRoadClientInterceptor implements ClientInterceptor {
                 if (fault != null) {
                     ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
                     saajSoapMessage.getSaajMessage().writeTo(outputStream);
-                    System.err.println(outputStream.toString());
+                } else {
+                    this.attachments = saajSoapMessage.getAttachments();
                 }
             } catch (SOAPException | IOException e) {
-                e.printStackTrace();
+                throw new SoapFaultException(e.getLocalizedMessage());
             }
-            this.attachments = saajSoapMessage.getAttachments();
         }
         return true;
     }
@@ -50,7 +51,5 @@ public class XRoadClientInterceptor implements ClientInterceptor {
     }
 
     @Override
-    public void afterCompletion(MessageContext messageContext, Exception e) throws WebServiceClientException {
-
-    }
+    public void afterCompletion(MessageContext messageContext, Exception e) throws WebServiceClientException { }
 }

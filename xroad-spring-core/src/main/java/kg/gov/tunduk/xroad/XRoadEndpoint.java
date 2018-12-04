@@ -1,7 +1,7 @@
 package kg.gov.tunduk.xroad;
 
-import kg.gov.tunduk.xroad.soap.XRoadObjectType;
 import kg.gov.tunduk.xroad.soap.XRoadClientId;
+import kg.gov.tunduk.xroad.soap.XRoadObjectType;
 import kg.gov.tunduk.xroad.soap.XRoadServiceId;
 import lombok.Getter;
 import org.springframework.util.Assert;
@@ -25,13 +25,9 @@ public class XRoadEndpoint {
 
     private Unmarshaller unmarshaller;
 
-    public XRoadEndpoint() {
-        try {
-            JAXBContext jaxbContext = JAXBContext.newInstance(XRoadClientId.class, XRoadServiceId.class, XRoadObjectType.class);
-            this.unmarshaller = jaxbContext.createUnmarshaller();
-        } catch (Exception exception) {
-            exception.printStackTrace();
-        }
+    public XRoadEndpoint() throws JAXBException {
+        JAXBContext jaxbContext = JAXBContext.newInstance(XRoadClientId.class, XRoadServiceId.class, XRoadObjectType.class);
+        this.unmarshaller = jaxbContext.createUnmarshaller();
     }
 
     void initialize(SoapHeader soapHeader) throws JAXBException {

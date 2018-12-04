@@ -1,7 +1,7 @@
 package kg.gov.tunduk.xroad;
 
-import kg.gov.tunduk.xroad.soap.XRoadObjectType;
 import kg.gov.tunduk.xroad.soap.XRoadClientId;
+import kg.gov.tunduk.xroad.soap.XRoadObjectType;
 import kg.gov.tunduk.xroad.soap.XRoadServiceId;
 import lombok.val;
 import org.springframework.ws.WebServiceMessage;
@@ -29,12 +29,7 @@ public class XRoadHeader implements WebServiceMessageCallback {
     private final JAXBElement<String> messageId;
     private final JAXBElement<String> userId;
 
-    public XRoadHeader(
-            XRoadClientId consumer,
-            XRoadServiceId producer,
-            String messageId,
-            String userId
-    ) {
+    public XRoadHeader(XRoadClientId consumer, XRoadServiceId producer, String messageId, String userId) {
         this.consumer = consumer;
         this.producer = producer;
 
