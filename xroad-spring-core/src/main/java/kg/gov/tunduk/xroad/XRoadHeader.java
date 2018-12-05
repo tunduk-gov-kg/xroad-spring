@@ -5,6 +5,8 @@ import kg.gov.tunduk.xroad.soap.XRoadObjectType;
 import kg.gov.tunduk.xroad.soap.XRoadSecurityServerIdentifierType;
 import kg.gov.tunduk.xroad.soap.XRoadServiceId;
 import lombok.val;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.client.core.WebServiceMessageCallback;
 import org.springframework.ws.soap.SoapHeader;
@@ -17,7 +19,7 @@ import javax.xml.bind.Marshaller;
 import javax.xml.namespace.QName;
 
 public class XRoadHeader implements WebServiceMessageCallback {
-
+    private final Logger logger = LoggerFactory.getLogger(XRoadHeader.class);
     private final static QName _UserId_QNAME = new QName("http://x-road.eu/xsd/xroad.xsd", "userId");
     private final static QName _Id_QNAME = new QName("http://x-road.eu/xsd/xroad.xsd", "id");
     private final static QName _ProtocolVersion_QNAME = new QName("http://x-road.eu/xsd/xroad.xsd", "protocolVersion");
@@ -31,7 +33,7 @@ public class XRoadHeader implements WebServiceMessageCallback {
     private final JAXBElement<String> messageId;
     private final JAXBElement<String> userId;
 
-    public XRoadHeader(XRoadClientId consumer, XRoadServiceId producer, XRoadSecurityServerIdentifierType targetSecurityServer, String messageId, String userId) {
+    private XRoadHeader(XRoadClientId consumer, XRoadServiceId producer, XRoadSecurityServerIdentifierType targetSecurityServer, String messageId, String userId) {
         this.consumer = consumer;
         this.producer = producer;
         this.targetSecurityServer = targetSecurityServer;
@@ -39,6 +41,14 @@ public class XRoadHeader implements WebServiceMessageCallback {
         this.protocolVersion = new JAXBElement<>(_ProtocolVersion_QNAME, String.class, null, "4.0");
         this.userId = new JAXBElement<>(_UserId_QNAME, String.class, null, userId);
         this.messageId = new JAXBElement<>(_Id_QNAME, String.class, null, messageId);
+    }
+
+    public XRoadHeader(XRoadClientId consumer, XRoadSecurityServerIdentifierType targetSecurityServer, String messageId, String userId) {
+        this(consumer, null, targetSecurityServer, messageId, userId);
+    }
+
+    public XRoadHeader(XRoadClientId consumer, XRoadServiceId producer, String messageId, String userId) {
+        this(consumer, producer, null, messageId, userId);
     }
 
     @Override
@@ -60,7 +70,7 @@ public class XRoadHeader implements WebServiceMessageCallback {
                 marshaller.marshal(this.targetSecurityServer, soapHeaderResult);
             }
         } catch (JAXBException e) {
-            e.printStackTrace();
+            logger.error(e.getLocalizedMessage());
         }
     }
 
