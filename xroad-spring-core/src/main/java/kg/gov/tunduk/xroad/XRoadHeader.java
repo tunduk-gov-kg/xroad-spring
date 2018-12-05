@@ -2,6 +2,7 @@ package kg.gov.tunduk.xroad;
 
 import kg.gov.tunduk.xroad.soap.XRoadClientId;
 import kg.gov.tunduk.xroad.soap.XRoadObjectType;
+import kg.gov.tunduk.xroad.soap.XRoadSecurityServerIdentifierType;
 import kg.gov.tunduk.xroad.soap.XRoadServiceId;
 import lombok.val;
 import org.springframework.ws.WebServiceMessage;
@@ -24,14 +25,16 @@ public class XRoadHeader implements WebServiceMessageCallback {
 
     private final XRoadClientId consumer;
     private final XRoadServiceId producer;
+    private final XRoadSecurityServerIdentifierType targetSecurityServer;
 
     private final JAXBElement<String> protocolVersion;
     private final JAXBElement<String> messageId;
     private final JAXBElement<String> userId;
 
-    public XRoadHeader(XRoadClientId consumer, XRoadServiceId producer, String messageId, String userId) {
+    public XRoadHeader(XRoadClientId consumer, XRoadServiceId producer, XRoadSecurityServerIdentifierType targetSecurityServer, String messageId, String userId) {
         this.consumer = consumer;
         this.producer = producer;
+        this.targetSecurityServer = targetSecurityServer;
 
         this.protocolVersion = new JAXBElement<>(_ProtocolVersion_QNAME, String.class, null, "4.0");
         this.userId = new JAXBElement<>(_UserId_QNAME, String.class, null, userId);
@@ -47,9 +50,15 @@ public class XRoadHeader implements WebServiceMessageCallback {
             val soapHeaderResult = soapHeader.getResult();
             marshaller.marshal(this.protocolVersion, soapHeaderResult);
             marshaller.marshal(this.messageId, soapHeaderResult);
-            marshaller.marshal(this.producer, soapHeaderResult);
-            marshaller.marshal(this.consumer, soapHeaderResult);
             marshaller.marshal(this.userId, soapHeaderResult);
+            marshaller.marshal(this.consumer, soapHeaderResult);
+
+            if (this.producer != null) {
+                marshaller.marshal(this.producer, soapHeaderResult);
+            }
+            if (this.targetSecurityServer != null) {
+                marshaller.marshal(this.targetSecurityServer, soapHeaderResult);
+            }
         } catch (JAXBException e) {
             e.printStackTrace();
         }
