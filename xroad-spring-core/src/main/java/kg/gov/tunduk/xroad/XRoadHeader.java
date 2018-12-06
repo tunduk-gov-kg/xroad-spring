@@ -30,7 +30,7 @@ public class XRoadHeader implements WebServiceMessageCallback {
     private final JAXBElement<String> messageId;
     private final JAXBElement<String> userId;
 
-    private XRoadHeader(XRoadClientId consumer, XRoadServiceId producer, XRoadSecurityServerIdentifierType targetSecurityServer, String messageId, String userId) {
+    public XRoadHeader(XRoadClientId consumer, XRoadServiceId producer, XRoadSecurityServerIdentifierType targetSecurityServer, String messageId, String userId) {
         this.consumer = consumer;
         this.producer = producer;
         this.targetSecurityServer = targetSecurityServer;
@@ -38,14 +38,6 @@ public class XRoadHeader implements WebServiceMessageCallback {
         this.protocolVersion = new JAXBElement<>(_ProtocolVersion_QNAME, String.class, null, "4.0");
         this.userId = new JAXBElement<>(_UserId_QNAME, String.class, null, userId);
         this.messageId = new JAXBElement<>(_Id_QNAME, String.class, null, messageId);
-    }
-
-    public XRoadHeader(XRoadClientId consumer, XRoadSecurityServerIdentifierType targetSecurityServer, String messageId, String userId) {
-        this(consumer, null, targetSecurityServer, messageId, userId);
-    }
-
-    public XRoadHeader(XRoadClientId consumer, XRoadServiceId producer, String messageId, String userId) {
-        this(consumer, producer, null, messageId, userId);
     }
 
     @Override
