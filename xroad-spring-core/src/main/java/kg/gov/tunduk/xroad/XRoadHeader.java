@@ -1,9 +1,6 @@
 package kg.gov.tunduk.xroad;
 
-import kg.gov.tunduk.xroad.soap.XRoadClientId;
-import kg.gov.tunduk.xroad.soap.XRoadObjectType;
-import kg.gov.tunduk.xroad.soap.XRoadSecurityServerIdentifierType;
-import kg.gov.tunduk.xroad.soap.XRoadServiceId;
+import kg.gov.tunduk.xroad.soap.*;
 import lombok.val;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -55,20 +52,21 @@ public class XRoadHeader implements WebServiceMessageCallback {
     public void doWithMessage(WebServiceMessage message) {
         SoapHeader soapHeader = ((SoapMessage) message).getSoapHeader();
         try {
-            JAXBContext context = JAXBContext.newInstance(XRoadClientId.class, XRoadServiceId.class, XRoadObjectType.class);
+            JAXBContext context = JAXBContext.newInstance(
+                    XRoadClientId.class,
+                    XRoadServiceId.class,
+                    XRoadObjectType.class,
+                    XRoadCentralServiceId.class,
+                    XRoadSecurityServerIdentifierType.class
+            );
             Marshaller marshaller = context.createMarshaller();
             val soapHeaderResult = soapHeader.getResult();
             marshaller.marshal(this.protocolVersion, soapHeaderResult);
             marshaller.marshal(this.messageId, soapHeaderResult);
             marshaller.marshal(this.userId, soapHeaderResult);
             marshaller.marshal(this.consumer, soapHeaderResult);
-
-            if (this.producer != null) {
-                marshaller.marshal(this.producer, soapHeaderResult);
-            }
-            if (this.targetSecurityServer != null) {
-                marshaller.marshal(this.targetSecurityServer, soapHeaderResult);
-            }
+            marshaller.marshal(this.producer, soapHeaderResult);
+            marshaller.marshal(this.targetSecurityServer, soapHeaderResult);
         } catch (JAXBException e) {
             logger.error(e.getLocalizedMessage());
         }
