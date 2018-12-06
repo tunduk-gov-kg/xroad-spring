@@ -65,8 +65,12 @@ public class XRoadHeader implements WebServiceMessageCallback {
             marshaller.marshal(this.messageId, soapHeaderResult);
             marshaller.marshal(this.userId, soapHeaderResult);
             marshaller.marshal(this.consumer, soapHeaderResult);
-            marshaller.marshal(this.producer, soapHeaderResult);
-            marshaller.marshal(this.targetSecurityServer, soapHeaderResult);
+            if (this.producer != null) {
+                marshaller.marshal(this.producer, soapHeaderResult);
+            }
+            if (this.targetSecurityServer != null) {
+                marshaller.marshal(this.targetSecurityServer, soapHeaderResult);
+            }
         } catch (JAXBException e) {
             logger.error(e.getLocalizedMessage());
         }
