@@ -3,13 +3,11 @@ package kg.gov.tunduk.xroad;
 import lombok.val;
 import org.springframework.ws.WebServiceMessage;
 import org.springframework.ws.context.MessageContext;
-import org.springframework.ws.server.endpoint.MethodEndpoint;
 import org.springframework.ws.soap.SoapHeader;
 import org.springframework.ws.soap.SoapHeaderElement;
 import org.springframework.ws.soap.SoapMessage;
 import org.springframework.ws.soap.server.SoapEndpointInterceptor;
 
-import javax.xml.bind.JAXBException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import java.util.Iterator;
@@ -17,16 +15,7 @@ import java.util.Iterator;
 public class XRoadEndpointInterceptor implements SoapEndpointInterceptor {
 
     @Override
-    public boolean handleRequest(MessageContext messageContext, Object endpoint) throws JAXBException {
-        if (endpoint instanceof MethodEndpoint) {
-            val methodEndpoint = (MethodEndpoint) endpoint;
-            Object endpointBean = methodEndpoint.getBean();
-            if (endpointBean instanceof XRoadEndpoint) {
-                XRoadEndpoint xRoadEndpoint = (XRoadEndpoint) endpointBean;
-                SoapHeader soapHeader = fetchSoapHeader(messageContext.getRequest());
-                xRoadEndpoint.initialize(soapHeader);
-            }
-        }
+    public boolean handleRequest(MessageContext messageContext, Object endpoint) {
         return true;
     }
 
