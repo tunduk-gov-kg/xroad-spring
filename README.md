@@ -17,6 +17,6 @@
 <dependency>
 	<groupId>kg.gov.tunduk</groupId>
 	<artifactId>xroad-spring-core</artifactId>
-	<version>0.1.4</version>
+	<version>1.0.0</version>
 </dependency>
 ```
